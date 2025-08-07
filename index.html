@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Why She’s Amazing</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #111;
+      color: white;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slideshow {
+      width: 90%;
+      height: 80%;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
+      pointer-events: auto;
+    }
+
+    .slide:nth-child(1) { background: linear-gradient(135deg, #ff6f61, #d7263d); }
+    .slide:nth-child(2) { background: linear-gradient(135deg, #1f4037, #99f2c8); }
+    .slide:nth-child(3) { background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b); }
+    .slide:nth-child(4) { background: linear-gradient(135deg, #1d2b64, #f8cdda); }
+    .slide:nth-child(5) { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); }
+    .slide:nth-child(6) { background: linear-gradient(135deg, #f7971e, #ffd200); }
+    .slide:nth-child(7) { background: linear-gradient(135deg, #43cea2, #185a9d); }
+
+    h2 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.5em;
+      max-width: 800px;
+      line-height: 1.5;
+    }
+
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #dad6d6;
+      font-size: 2.5rem;
+      cursor: pointer;
+      z-index: 2;
+      transition: color 0.3s ease, transform 0.2s ease;
+      user-select: none;
+      padding: 0 12px;
+    }
+
+    .nav-button:hover {
+      color: #414141;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .nav-button.left {
+      left: 20px;
+    }
+
+    .nav-button.right {
+      right: 20px;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<audio id="bg-music" loop>
+  <source src="background.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<div class="slideshow">
+  <div class="slide active">
+    <h2>Welcome to Payal’s Story 🌸</h2>
+    <p>Discover the many reasons why she’s truly special.</p>
+  </div>
+
+  <div class="slide">
+    <h2>Her Kindness 🫶</h2>
+    <p>She treats everyone with empathy and compassion. It's just who she is.</p>
+  </div>
+
+  <div class="slide">
+    <h2>Her Strength ✊</h2>
+    <p>She’s been through storms and still stands tall — calm, graceful, powerful.</p>
+  </div>
+
+  <div class="slide">
+    <h2>Her Joy 💃</h2>
+    <p>Her laughter is contagious, and her energy lifts every soul around her.</p>
+  </div>
+
+  <div class="slide">
+    <h2>Her Wisdom Lights the Way 💡</h2>
+    <p>She speaks with depth, listens with presence, and guides with her heart.</p>
+  </div>
+
+  <div class="slide">
+    <h2>She Nurtures Like Sunshine ☀️</h2>
+    <p>Her care is genuine and effortless, helping those around her grow, heal, and feel loved.</p>
+  </div>
+
+  <div class="slide">
+    <h2>She’s One of a Kind 💖</h2>
+    <p>No words can fully capture how rare and radiant she is.</p>
+  </div>
+
+  <!-- Navigation Arrows -->
+  <button class="nav-button left" onclick="changeSlide(-1)">&#10094;</button>
+  <button class="nav-button right" onclick="changeSlide(1)">&#10095;</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let currentIndex = 0;
+  let autoSlideInterval;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+    });
+  }
+
+  function changeSlide(direction) {
+    currentIndex = (currentIndex + direction + slides.length) % slides.length;
+    showSlide(currentIndex);
+    resetAutoSlide();
+  }
+
+  function autoSlide() {
+    currentIndex = (currentIndex + 1) % slides.length;
+    showSlide(currentIndex);
+  }
+
+  function resetAutoSlide() {
+    clearInterval(autoSlideInterval);
+    autoSlideInterval = setInterval(autoSlide, 8000); // 8 seconds
+  }
+
+  // Auto-play music after user interaction (click)
+  document.addEventListener('click', () => {
+    const music = document.getElementById('bg-music');
+    if (music.paused) {
+      music.play().catch(err => {
+        console.log("Audio play failed:", err);
+      });
+    }
+  });
+
+  // Initialize slideshow
+  resetAutoSlide();
+</script>
+
+</body>
+</html>
